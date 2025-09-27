@@ -1,0 +1,89 @@
+.miniBannerContainer {
+  position: relative;
+  width: 100%;
+  height: 350px; /* Home page se chota height */
+  overflow: hidden;
+  margin-bottom: 2rem; /* Niche se thoda space */
+  border-radius: 20px; /* Thoda soft look */
+}
+
+.imageWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1.2s ease-in-out;
+}
+
+.imageWrapper.active {
+  opacity: 1;
+}
+
+.content {
+  position: absolute;
+  top: 50%;
+  left: 10%; /* Left side par content */
+  transform: translateY(-50%);
+  text-align: left;
+  z-index: 10;
+  color: #e0e0e0; /* Star Dust White */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+  max-width: 50%; /* Content zyada fail na ho */
+}
+
+.heading {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 0 0 0.8rem 0;
+  color: #ff00ff; /* Cyber Pink for heading */
+}
+
+.subheading {
+  font-size: 1.2rem;
+  font-weight: 300;
+  margin: 0 0 1.5rem 0;
+}
+
+.shopNowButton {
+  display: inline-block;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 0.8rem 2rem;
+  border-radius: 50px;
+  color: white;
+  background: linear-gradient(45deg, #8a2be2 0%, #ff00ff 100%);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.shopNowButton:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(138, 43, 226, 0.3);
+}
+
+/* Dots Styling */
+.dotsContainer {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.7rem;
+  z-index: 10;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background-color: rgba(224, 224, 224, 0.5); /* Semi-transparent white */
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dot.activeDot {
+  background-color: #8a2be2; /* Electric Violet when active */
+  width: 12px;
+  height: 12px;
+}

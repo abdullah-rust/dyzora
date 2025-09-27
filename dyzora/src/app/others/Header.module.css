@@ -1,0 +1,153 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 3rem;
+  background-color: #0a0a10;
+  color: #e0e0e0;
+  border-bottom: 1px solid #1c1c2e;
+
+  /* Yeh 3 properties add karen */
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.leftSection,
+.rightSection {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
+/* Naya Section */
+.searchSection {
+  flex-grow: 1; /* Center mein jagah lega */
+  display: flex;
+  justify-content: center;
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 500px; /* Search bar ki max-width */
+  background-color: #1a1a2e; /* Thoda lighter color */
+  border-radius: 50px;
+  padding: 0.5rem 1rem;
+}
+
+.searchInput {
+  width: 100%;
+  background: none;
+  border: none;
+  outline: none;
+  color: #e0e0e0;
+  padding: 0.5rem;
+}
+
+.searchInput::placeholder {
+  color: #999;
+}
+
+.searchButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #8a2be2; /* Electric Violet */
+  display: flex;
+  align-items: center;
+}
+
+.searchButton svg {
+  transition: transform 0.2s ease;
+}
+
+.searchButton:hover svg {
+  transform: scale(1.1);
+}
+
+.logoContainer {
+  cursor: pointer;
+  display: flex;
+}
+.nav {
+  display: flex;
+  gap: 2rem;
+}
+
+.navLink {
+  text-decoration: none;
+  color: #e0e0e0;
+  font-weight: 500;
+  position: relative;
+}
+
+.navLink:hover {
+  color: #8a2be2; /* Electric Violet */
+}
+
+/* Cart Icon Styling */
+.cartIcon {
+  position: relative;
+  color: #e0e0e0;
+}
+
+.cartIcon svg {
+  width: 28px;
+  height: 28px;
+  transition: color 0.3s ease;
+}
+
+.cartIcon:hover {
+  color: #8a2be2; /* Electric Violet */
+}
+
+.cartCount {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background-color: #ff00ff; /* Cyber Pink */
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+/* Auth Buttons */
+.authButtons {
+  display: flex;
+  gap: 1rem;
+  cursor: pointer;
+}
+
+.loginButton,
+.signupButton {
+  text-decoration: none;
+  font-weight: bold;
+  padding: 0.6rem 1.2rem;
+  border-radius: 50px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.loginButton {
+  background-color: transparent;
+  border: 1px solid #e0e0e0;
+  color: #e0e0e0;
+}
+
+.signupButton {
+  background: linear-gradient(
+    45deg,
+    #8a2be2 0%,
+    #ff00ff 100%
+  ); /* Our Gradient */
+  color: white;
+  border: none;
+}
+
+.loginButton:hover,
+.signupButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(138, 43, 226, 0.2);
+}

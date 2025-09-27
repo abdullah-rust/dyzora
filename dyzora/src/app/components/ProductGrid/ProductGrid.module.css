@@ -1,0 +1,39 @@
+.gridContainer {
+  padding: 3rem;
+}
+
+.sectionTitle {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: #8a2be2; /* Electric Violet */
+  position: relative;
+}
+
+.sectionTitle::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(45deg, #8a2be2 0%, #ff00ff 100%);
+  border-radius: 2px;
+}
+
+.productGrid {
+  display: grid;
+  /* minmax(280px, 1fr) ko badal kar */
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 2rem;
+  justify-items: center;
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #e0e0e0;
+  padding: 5rem 0;
+}

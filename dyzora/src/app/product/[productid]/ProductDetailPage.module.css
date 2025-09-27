@@ -1,0 +1,127 @@
+.container {
+  display: flex;
+  gap: 3rem;
+  padding: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.productImages {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.mainImage {
+  position: relative;
+  width: 100%;
+  padding-top: 100%; /* 1:1 Aspect Ratio */
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.thumbnailContainer {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.thumbnail {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.thumbnail:hover,
+.thumbnail.active {
+  border-color: #8a2be2; /* Electric Violet */
+}
+
+.productDetails {
+  flex: 1;
+  background-color: #1a1a2e;
+  padding: 2.5rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.productName {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #e0e0e0;
+  margin: 0 0 0.5rem 0;
+}
+
+.productPrice {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ff00ff; /* Cyber Pink */
+  margin: 0 0 2rem 0;
+}
+
+.description {
+  font-size: 1rem;
+  color: #ccc;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.features h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #8a2be2;
+  margin-bottom: 1rem;
+}
+
+.featureList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  color: #e0e0e0;
+}
+
+.featureList li {
+  margin-bottom: 0.5rem;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.featureList li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #28a745; /* Green checkmark */
+  font-weight: bold;
+}
+
+.addToCartButton {
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(45deg, #8a2be2 0%, #ff00ff 100%);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 2rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.addToCartButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+}

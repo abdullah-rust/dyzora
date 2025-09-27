@@ -1,0 +1,76 @@
+.cartItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #1a1a2e;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.itemImage {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.itemDetails {
+  flex-grow: 1;
+  margin-left: 1rem;
+}
+
+.itemName {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #e0e0e0;
+  margin: 0;
+}
+
+.itemPrice {
+  font-size: 1rem;
+  color: #8a2be2;
+  margin: 0.2rem 0 0 0;
+}
+
+.quantityControl {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.quantityButton {
+  background-color: #0a0a10;
+  border: 1px solid #333;
+  color: #e0e0e0;
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.quantityValue {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.itemTotal {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #ff00ff;
+}
+
+.removeButton {
+  background: none;
+  border: none;
+  color: #e0e0e0;
+  cursor: pointer;
+  margin-left: 1rem;
+}
+
+.removeButton svg {
+  transition: color 0.3s ease;
+}
+
+.removeButton:hover svg {
+  color: #ff00ff;
+}

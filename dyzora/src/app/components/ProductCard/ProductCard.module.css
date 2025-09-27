@@ -1,0 +1,58 @@
+.card {
+  background-color: #1a1a2e;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(138, 43, 226, 0.2);
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  /* Height ko thora adjust kar ke behtar ratio do */
+  height: 300px;
+}
+.content {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.productName {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: #e0e0e0;
+}
+
+.productPrice {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0 0 1rem 0;
+  color: #8a2be2; /* Electric Violet */
+}
+
+.addToCartButton {
+  padding: 0.7rem 1.5rem;
+  border-radius: 50px;
+  background: linear-gradient(45deg, #8a2be2 0%, #ff00ff 100%);
+  color: white;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.addToCartButton:hover {
+  transform: scale(1.05);
+}

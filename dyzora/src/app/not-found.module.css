@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  text-align: center;
+  padding: 2rem;
+}
+
+.content {
+  background-color: #1a1a2e;
+  padding: 3rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
+}
+
+.title {
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: #8a2be2; /* Electric Violet */
+  margin: 0;
+}
+
+.message {
+  font-size: 1.2rem;
+  color: #e0e0e0;
+  margin: 1.5rem 0 2rem 0;
+}
+
+.homeLink {
+  display: inline-block;
+  text-decoration: none;
+  background: linear-gradient(45deg, #8a2be2 0%, #ff00ff 100%);
+  color: white;
+  padding: 0.8rem 2rem;
+  border-radius: 50px;
+  font-weight: bold;
+  transition: transform 0.2s ease;
+}
+
+.homeLink:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
+}

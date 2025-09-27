@@ -1,0 +1,139 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 2rem;
+}
+
+.card {
+  background-color: #1a1a2e;
+  padding: 2.5rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  max-width: 900px;
+  width: 100%;
+}
+
+.title {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #e0e0e0;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.contentWrapper {
+  display: flex;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .contentWrapper {
+    flex-direction: column;
+  }
+}
+
+.orderSummary,
+.paymentForm {
+  flex: 1;
+}
+
+.summaryTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #8a2be2;
+  border-bottom: 2px solid #333;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.itemList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  color: #e0e0e0;
+  margin-bottom: 0.8rem;
+}
+
+.summaryDetails {
+  border-top: 1px solid #333;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+}
+
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  color: #ccc;
+  margin-bottom: 0.8rem;
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ff00ff;
+}
+
+.inputGroup {
+  margin-bottom: 1.5rem;
+}
+
+.inputGroup label {
+  display: block;
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-bottom: 0.5rem;
+}
+
+.inputGroup input {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #0a0a10;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: #e0e0e0;
+}
+
+.inputGroup input:focus {
+  outline: none;
+  border-color: #8a2be2;
+}
+
+.cardDetails {
+  display: flex;
+  gap: 1rem;
+}
+
+.payButton {
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(45deg, #8a2be2 0%, #ff00ff 100%);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.payButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
+}
+
+.payButton:disabled {
+  background: #333;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
