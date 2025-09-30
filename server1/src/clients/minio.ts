@@ -36,4 +36,45 @@ async function checkMinioConnection() {
 // Check karein
 checkMinioConnection();
 
+const readOnlyPolicy = {
+  Version: "2012-10-17",
+  Statement: [
+    {
+      Effect: "Allow",
+      Principal: { AWS: "*" },
+      Action: ["s3:GetObject"],
+      Resource: [
+        "arn:aws:s3:::products/*", // Tumhara bucket name yahan use hoga
+      ],
+    },
+  ],
+};
+
+async function ensureBucketPublicAccess() {
+  const bucketName = "products";
+  try {
+    // Pehle dekho agar bucket exist karta hai
+    const exists = await minioClient.bucketExists(bucketName);
+    if (!exists) {
+      console.log(
+        `Bucket ${bucketName} does not exist. Please create it first.`
+      );
+      return;
+    }
+
+    // Policy set karna
+    await minioClient.setBucketPolicy(
+      bucketName,
+      JSON.stringify(readOnlyPolicy)
+    );
+    console.log(
+      `✅ Success: Bucket '${bucketName}' policy set to Public Read.`
+    );
+  } catch (err) {
+    console.error("❌ Failed to set MinIO bucket policy:", err);
+  }
+}
+
+ensureBucketPublicAccess();
+
 export { minioClient };
