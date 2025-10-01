@@ -6,12 +6,36 @@ import Header from "../others/Header";
 import Footer from "../components/Footer/Footer";
 // Dummy data for categories
 const categories = [
-  { name: "Men's Fashion", image: "/catagories/men_fashion.jpg" },
-  { name: "Women's Fashion", image: "/catagories/women_fashion.jpg" },
-  { name: "Electronics", image: "/catagories/electronics.jpg" },
-  { name: "Accessories", image: "/catagories/accessories.jpg" },
-  { name: "Home Goods", image: "/catagories/home_goods.jpg" },
-  { name: "Sneakers", image: "/catagories/sneakers.jpg" },
+  {
+    name: "Men's Fashion",
+    image: "/catagories/men_fashion.jpg",
+    searchname: "men",
+  },
+  {
+    name: "Women's Fashion",
+    image: "/catagories/women_fashion.jpg",
+    searchname: "women",
+  },
+  {
+    name: "Electronics",
+    image: "/catagories/electronics.jpg",
+    searchname: "electronics",
+  },
+  {
+    name: "Accessories",
+    image: "/catagories/accessories.jpg",
+    searchname: "accessories",
+  },
+  {
+    name: "Home & Kitchen",
+    image: "/catagories/home_goods.jpg",
+    searchname: "home",
+  },
+  {
+    name: "Sneakers",
+    image: "/catagories/sneakers.jpg",
+    searchname: "sneakers",
+  },
 ];
 
 const CategoriesPage = () => {
@@ -30,6 +54,7 @@ const CategoriesPage = () => {
               key={category.name}
               name={category.name}
               image={category.image}
+              searchname={category.searchname}
             />
           ))}
         </div>

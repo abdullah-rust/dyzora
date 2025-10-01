@@ -1,16 +1,11 @@
-// src/app/shop/page.tsx (Shop Component)
-
 "use client";
 
-import MiniBanner from "../components/MiniBanner/MiniBanner";
-import Header from "../others/Header";
-import Footer from "../components/Footer/Footer";
-import ProductGrid from "../components/ProductGrid/ProductGrid";
-import { useEffect, useCallback, useState } from "react";
-import { api } from "../global/api";
-import Pagination from "../components/common/Pagination";
+import ProductGrid from "@/app/components/ProductGrid/ProductGrid";
+import Pagination from "@/app/components/common/Pagination";
+import { useState, useEffect, useCallback } from "react";
+import { api } from "@/app/global/api";
+import Header from "@/app/others/Header";
 
-// Interface for type safety (optional but good practice)
 interface Product {
   id: number;
   name: string;
@@ -18,21 +13,30 @@ interface Product {
   primary_image: string;
 }
 
-export default function Shop() {
+export default function Searchpage({ params }: { params: { search: string } }) {
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState<Product[]>([]); // Product type use kiya
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
+  // Ismein 'laptop%20pro' aa raha hai
+
   const load_products = useCallback(async () => {
     setLoading(true);
+    const searchTerm = params.search;
     try {
-      // ✅ API URL theek kiya
+      // 🚀 FIX: Search term ko API ko bhejny se pehle decode karo
+      const decodedSearch = decodeURIComponent(searchTerm);
+
+      console.log("Decoded Search Term:", decodedSearch); // Ab yahan "laptop pro" aana chahiye
+
       const response = await api.get("/get-products", {
+        // API URL ko bhi theek kar diya
         params: {
           limit: 12,
-          sort: "random",
+          sort: "date_desc",
           page: currentPage,
+          search: decodedSearch.trim(), // Decode ki hui value bhejenge
         },
       });
       setProducts(response.data.data);
@@ -44,6 +48,7 @@ export default function Shop() {
     } finally {
       setLoading(false);
     }
+    // ... dependencies mein searchTerm zaroor shamil ho
   }, [currentPage]);
 
   useEffect(() => {
@@ -63,7 +68,6 @@ export default function Shop() {
   return (
     <main>
       <Header />
-      <MiniBanner />
 
       {/* --- Loading State Handling Yahan Hogi --- */}
       {loading ? (
@@ -83,8 +87,6 @@ export default function Shop() {
           onPageChange={handlePageChange}
         />
       )}
-
-      <Footer />
     </main>
   );
 }

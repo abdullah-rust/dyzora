@@ -1,16 +1,11 @@
-// src/app/shop/page.tsx (Shop Component)
-
 "use client";
 
-import MiniBanner from "../components/MiniBanner/MiniBanner";
-import Header from "../others/Header";
-import Footer from "../components/Footer/Footer";
-import ProductGrid from "../components/ProductGrid/ProductGrid";
-import { useEffect, useCallback, useState } from "react";
-import { api } from "../global/api";
-import Pagination from "../components/common/Pagination";
+import ProductGrid from "@/app/components/ProductGrid/ProductGrid";
+import Pagination from "@/app/components/common/Pagination";
+import { useState, useEffect, useCallback } from "react";
+import { api } from "@/app/global/api";
+import Header from "@/app/others/Header";
 
-// Interface for type safety (optional but good practice)
 interface Product {
   id: number;
   name: string;
@@ -18,7 +13,11 @@ interface Product {
   primary_image: string;
 }
 
-export default function Shop() {
+export default function CategoriesByType({
+  params,
+}: {
+  params: { name: string };
+}) {
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState<Product[]>([]); // Product type use kiya
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,12 +26,13 @@ export default function Shop() {
   const load_products = useCallback(async () => {
     setLoading(true);
     try {
-      // ✅ API URL theek kiya
+      const categoryName = params.name; // ✅ yahan await nahi lagana
       const response = await api.get("/get-products", {
         params: {
           limit: 12,
-          sort: "random",
+          sort: "date_desc",
           page: currentPage,
+          category: categoryName,
         },
       });
       setProducts(response.data.data);
@@ -44,7 +44,7 @@ export default function Shop() {
     } finally {
       setLoading(false);
     }
-  }, [currentPage]);
+  }, [currentPage, params]);
 
   useEffect(() => {
     load_products();
@@ -63,7 +63,6 @@ export default function Shop() {
   return (
     <main>
       <Header />
-      <MiniBanner />
 
       {/* --- Loading State Handling Yahan Hogi --- */}
       {loading ? (
@@ -83,8 +82,6 @@ export default function Shop() {
           onPageChange={handlePageChange}
         />
       )}
-
-      <Footer />
     </main>
   );
 }

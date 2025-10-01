@@ -26,8 +26,24 @@ export async function getProducts(req: Request, res: Response) {
     let whereConditions: string[] = ["is_active = TRUE"]; // Sirf active products dikhana
 
     // --- 3. Filtering Logic ---
+    // --- 3. Filtering Logic (FIXED) ---
     if (category) {
-      whereConditions.push(`category = '${sanitize(category)}'`);
+      // 1. Agar tumne pehle database mein saari categories ko lowercase kiya hai,
+      // toh hum yahan bhi lowercase use karenge.
+      const safeCategory = sanitize(category).toLowerCase();
+
+      // 2. Exact match ke bajaye ILIKE (Case-Insensitive LIKE) use karo.
+      // Agar tum '/shop/home-and-kitchen' bhej rahe ho, aur database mein 'home & kitchen' hai,
+      // toh tumhein partial matching ki zaroorat hai, aur ILIKE case-insensitive bhi hai.
+
+      // 🚀 Recommended Fix for Case-Insensitive and Partial Matching:
+      whereConditions.push(`category ILIKE '%${safeCategory}%'`);
+
+      /*
+        // Agar tumne database mein 'Home & Kitchen' ko 'home & kitchen' kar diya hai,
+        // toh yeh bhi chalega aur sirf case-insensitive rahega:
+        // whereConditions.push(`LOWER(category) = '${safeCategory}'`);
+      */
     }
 
     if (brand) {
@@ -44,13 +60,21 @@ export async function getProducts(req: Request, res: Response) {
 
     // --- 4. Search Logic ---
     if (search) {
-      // ILIKE (case-insensitive) search on Name and Description
-      const safeSearch = sanitize(search);
-      whereConditions.push(
-        `(name ILIKE '%${safeSearch}%' OR description ILIKE '%${safeSearch}%')`
-      );
-    }
+      // 1. Search term ko spaces se alag alag words mein toro
+      const searchTerms = search.split(/\s+/).filter((t) => t.length > 0);
 
+      if (searchTerms.length > 0) {
+        // Har word ke liye ILIKE condition banao
+        const termConditions = searchTerms.map((term) => {
+          const safeTerm = sanitize(term);
+          // Har word name ya description mein hona chahiye
+          return `(name ILIKE '%${safeTerm}%' OR description ILIKE '%${safeTerm}%')`;
+        });
+
+        // Sabhi word conditions ko AND se join karo (yani, product mein woh SARE words hone chahiye)
+        whereConditions.push(`(${termConditions.join(" AND ")})`);
+      }
+    }
     // --- 5. Sorting Logic ---
     let orderBy: string;
     switch (sort) {

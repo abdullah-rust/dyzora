@@ -23,6 +23,9 @@ import { Delete_Address } from "../profile/delete_address";
 import multer from "multer";
 import { addProduct } from "../admin/add_products";
 import { getProducts } from "../products_render/getProducts";
+import getProduct from "../products_render/getproduct";
+import addComments from "../products_render/addComments";
+import getComments from "../products_render/getComments";
 
 const router = Router();
 
@@ -45,6 +48,9 @@ router.get("/get-address", CheckJwt, Get_Address);
 router.delete("/delete-address/:id", CheckJwt, Delete_Address);
 router.post("/admin/add-product", upload.array("images", 10), addProduct);
 router.get("/get-products", getProducts);
+router.get("/get-product", getProduct);
+router.get("/get-comments", getComments);
+router.post("/add-comment", CheckJwt, addComments);
 
 router.get(
   "/auth/google",

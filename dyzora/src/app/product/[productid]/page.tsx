@@ -1,50 +1,148 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import styles from "./ProductDetailPage.module.css";
 import Header from "@/app/others/Header";
 import Footer from "@/app/components/Footer/Footer";
-// Dummy data for a single product
-const dummyProduct = {
-  id: "dyz-futur-01",
-  name: "Cybernetic Hoodie",
-  price: 79.99,
-  description:
-    "Crafted from advanced nano-fiber fabric, this hoodie is designed for the urban explorer. It features glowing seams, an integrated micro-display on the cuff, and a comfortable fit that's perfect for all-day wear.",
-  images: [
-    "/products/product1.jpg",
-    "/products/product1.jpg",
-    "/products/product1.jpg",
-    "/products/product1.jpg",
-  ],
-  features: [
-    "Nano-fiber material",
-    "LED illuminated seams",
-    "Adjustable hood with drawstrings",
-    "Integrated cuff display",
-  ],
-};
+import { api } from "@/app/global/api";
+import ProductComments from "./ProductComments";
 
-const ProductDetailPage = () => {
-  const [mainImage, setMainImage] = useState(dummyProduct.images[0]);
+// Product Interface (Jaisa tumne banaya tha)
+export interface Product {
+  id: number;
+  name: string;
+  description: string;
+  price: string;
+  sku: string;
+  brand: string;
+  category: string;
+  subcategory: string;
+  stock_quantity: number;
+  is_active: boolean;
+  images: string[];
+  tags: string[];
+  // 💡 FIX: Maine variants ko 'any' rakha hai ya simple object {}
+  // Agar aap isay features ke liye use kar rahe hain, to isay string[] ya any karna hoga
+  variants: any;
+  created_at: string;
+  updated_at: string;
+}
+
+interface ProductDetailPageProps {
+  params: { productid: string };
+}
+
+const ProductDetailPage = ({ params }: ProductDetailPageProps) => {
+  const [product, setProduct] = useState<Product | null>(null);
+  const [mainImage, setMainImage] = useState<string>(""); // 💡 FIX: Initial state empty string
+  const [loading, setLoading] = useState(true); // 💡 FIX: Loading state add kiya
+  const [error, setError] = useState<string | null>(null);
+
+  // 💡 FIX: load_product ko useCallback mein wrap kiya
+  const load_product = useCallback(async () => {
+    const id = params.productid;
+    setLoading(true);
+    setError(null); // Reset error
+
+    // 💡 FIX: ID check jo backend mein tha, yahan bhi kar liya
+    if (!id) {
+      setError("Invalid product ID.");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      // 💡 FIX: API URL theek kiya
+      const res = await api.get("get-product", {
+        params: {
+          id: id,
+        },
+      });
+
+      // 💡 FIX: Backend se data aur success check kiya (jo humne improve kiya tha)
+      if (res.data.success && res.data.data) {
+        const fetchedProduct: Product = res.data.data;
+        setProduct(fetchedProduct);
+        setMainImage(fetchedProduct.images[0] || ""); // Pehli image set ki
+      } else {
+        setError(res.data.message || "Product not found.");
+      }
+    } catch (err) {
+      console.error("Error loading product:", err);
+      setError("Failed to fetch product data from server.");
+    } finally {
+      setLoading(false);
+    }
+  }, []); // 💡 FIX: Dependency mein productid use kiya
+
+  useEffect(() => {
+    load_product();
+  }, [load_product]);
+
+  // ------------------------------------
+  // --- Conditional Rendering Logic ---
+  // ------------------------------------
+
+  if (loading) {
+    return (
+      <main>
+        <Header />
+        <div
+          className={styles.container}
+          style={{ textAlign: "center", padding: "100px" }}
+        >
+          Loading Product Details...
+        </div>
+        <Footer />
+      </main>
+    );
+  }
+
+  if (error || !product) {
+    return (
+      <main>
+        <Header />
+        <div
+          className={styles.container}
+          style={{ textAlign: "center", padding: "100px", color: "red" }}
+        >
+          Error: {error || "Product data is missing."}
+        </div>
+        <Footer />
+      </main>
+    );
+  }
+
+  // 💡 FIX: Ab hum 'product' ko directly use kar sakte hain kyunki humne upar check kar liya hai
+
+  // 💡 FIX: Variants/Features ko array mein convert kiya, kyunki 'variants' ek object tha
+  // Agar 'variants' ko tumne features ke liye array of strings ke tor par use kiya hai
+  // to usay theek se access karna hoga. Filhal assuming agar variants ek array nahi hai
+  const featuresList = Array.isArray(product.variants)
+    ? product.variants
+    : product.tags && Array.isArray(product.tags)
+    ? product.tags
+    : [];
 
   return (
-    <div>
+    <main>
       <Header />
       <div className={styles.container}>
+        {/* --- Product Images Section --- */}
         <div className={styles.productImages}>
           <div className={styles.mainImage}>
+            {/* 💡 FIX: Image component ko check karne ki zarurat nahi kyunki 'product' set ho chuka hai */}
             <Image
-              src={mainImage}
-              alt={dummyProduct.name}
-              layout="fill"
+              src={mainImage || product.images[0] || "/default-product.png"}
+              alt={product.name}
+              fill
               objectFit="cover"
               priority
             />
           </div>
           <div className={styles.thumbnailContainer}>
-            {dummyProduct.images.map((img, index) => (
+            {product.images.map((img, index) => (
               <div
                 key={index}
                 className={`${styles.thumbnail} ${
@@ -54,8 +152,8 @@ const ProductDetailPage = () => {
               >
                 <Image
                   src={img}
-                  alt={`${dummyProduct.name} thumbnail ${index + 1}`}
-                  layout="fill"
+                  alt={`${product.name} thumbnail ${index + 1}`}
+                  fill
                   objectFit="cover"
                 />
               </div>
@@ -63,18 +161,18 @@ const ProductDetailPage = () => {
           </div>
         </div>
 
+        {/* --- Product Details Section --- */}
         <div className={styles.productDetails}>
-          <h1 className={styles.productName}>{dummyProduct.name}</h1>
-          <p className={styles.productPrice}>
-            ${dummyProduct.price.toFixed(2)}
-          </p>
+          <h1 className={styles.productName}>{product.name}</h1>
+          <p className={styles.productPrice}>${product.price}</p>
 
-          <p className={styles.description}>{dummyProduct.description}</p>
+          <p className={styles.description}>{product.description}</p>
 
           <div className={styles.features}>
-            <h3>Key Features</h3>
+            <h3>Key Features / Tags</h3>
             <ul className={styles.featureList}>
-              {dummyProduct.features.map((feature, index) => (
+              {/* 💡 FIX: Array.forEach ki jagah Array.map use kiya aur 'variants' ki jagah 'featuresList' use kiya */}
+              {featuresList.map((feature: string, index: number) => (
                 <li key={index}>{feature}</li>
               ))}
             </ul>
@@ -83,8 +181,12 @@ const ProductDetailPage = () => {
           <button className={styles.addToCartButton}>Add to Cart</button>
         </div>
       </div>
+      <div className={styles.commentsWrapper}>
+        {/* Ensure product.id is converted to number if it's string type */}
+        <ProductComments productId={product.id} />
+      </div>
       <Footer />
-    </div>
+    </main>
   );
 };
 

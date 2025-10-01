@@ -12,6 +12,7 @@ export default function Header() {
   const [login, setLogin] = useState(false);
   const [loading, setLoading] = useState(true); // sirf auth ke liye
   const router = useRouter();
+  const [search, setSearch] = useState("");
 
   const check = async () => {
     const res = await check_login();
@@ -31,6 +32,15 @@ export default function Header() {
       setLoading(false);
     }
   }, []);
+
+  function handleSearch(e: any) {
+    e.preventDefault();
+
+    const searchTerm = search;
+    if (searchTerm && searchTerm.trim() !== "") {
+      router.push(`/search/${encodeURIComponent(searchTerm.trim())}`);
+    }
+  }
 
   return (
     <header className={styles.header}>
@@ -62,30 +72,33 @@ export default function Header() {
 
       {/* Search Bar */}
       <div className={styles.searchSection}>
-        <div className={styles.searchBar}>
-          <input
-            type="text"
-            placeholder="Search for products..."
-            className={styles.searchInput}
-          />
-          <button className={styles.searchButton}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="lucide lucide-search"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.3-4.3" />
-            </svg>
-          </button>
-        </div>
+        <form onSubmit={handleSearch}>
+          <div className={styles.searchBar}>
+            <input
+              type="text"
+              placeholder="Search for products..."
+              className={styles.searchInput}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <button className={styles.searchButton} type="submit">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="lucide lucide-search"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.3-4.3" />
+              </svg>
+            </button>
+          </div>
+        </form>
       </div>
 
       <div className={styles.rightSection}>

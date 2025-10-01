@@ -7,12 +7,13 @@ import Link from "next/link";
 interface CategoryCardProps {
   name: string;
   image: string;
+  searchname: string;
 }
 
-const CategoryCard = ({ name, image }: CategoryCardProps) => {
+const CategoryCard = ({ name, image, searchname }: CategoryCardProps) => {
   return (
     <Link
-      href={`/shop?category=${name.toLowerCase()}`}
+      href={`/catagoriestype/${searchname.toLowerCase()}`}
       className={styles.cardLink}
     >
       <div className={styles.card}>
